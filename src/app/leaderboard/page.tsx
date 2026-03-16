@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useLanguage } from "../lib/LanguageContext";
 import { useRoast } from "../lib/RoastContext";
+import { LanguageSelector } from "../components/LanguageSelector";
 
 export default function LeaderboardPage() {
 	const { codes, clearCodes } = useRoast();
+	const { t } = useLanguage();
 
 	const sortedCodes = [...codes].sort((a, b) => a.score - b.score);
 
@@ -34,8 +37,9 @@ export default function LeaderboardPage() {
 						href="/"
 						className="text-[var(--text-secondary)] font-secondary text-[13px] hover:text-[var(--text-primary)] transition-colors"
 					>
-						roast
+						{t("roast")}
 					</Link>
+					<LanguageSelector />
 				</div>
 			</nav>
 

@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { analyzeCode } from "./lib/analyze";
+import { useLanguage } from "./lib/LanguageContext";
 import { type RoastedCode, useRoast } from "./lib/RoastContext";
+import { LanguageSelector } from "./components/LanguageSelector";
 
 const DEFAULT_CODE = `function calculatePrice(items) {
   let total = 0;
@@ -21,6 +23,7 @@ export default function Home() {
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 	const { addCode } = useRoast();
+	const { t } = useLanguage();
 
 	const lineCount = code.split("\n").length;
 	const maxLines = Math.max(lineCount, 16);
@@ -78,8 +81,9 @@ export default function Home() {
 						href="/leaderboard"
 						className="text-[var(--text-secondary)] font-secondary text-[13px] hover:text-[var(--text-primary)] transition-colors"
 					>
-						leaderboard
+						{t("leaderboard")}
 					</Link>
+					<LanguageSelector />
 				</div>
 			</nav>
 
@@ -92,13 +96,11 @@ export default function Home() {
 							$
 						</span>
 						<h1 className="text-[var(--text-primary)] font-primary text-[36px] font-bold">
-							paste your code. get roasted.
+							{t("heroTitle")}
 						</h1>
 					</div>
 					<p className="text-[var(--text-secondary)] font-secondary text-sm">
-						{
-							"// drop your code below and we'll rate it — brutally honest or full roast mode"
-						}
+						{t("heroSubtitle")}
 					</p>
 				</div>
 
@@ -147,11 +149,11 @@ export default function Home() {
 								<div className="w-4 h-4 rounded-full bg-white ml-auto" />
 							</div>
 							<span className="text-[var(--accent-green)] font-primary text-[13px]">
-								roast mode
+								{t("roastMode")}
 							</span>
 						</div>
 						<span className="text-[var(--text-tertiary)] font-secondary text-xs">
-							{"// maximum sarcasm enabled"}
+							{t("maximumSarcasm")}
 						</span>
 					</div>
 					{/* Submit Button */}
@@ -161,20 +163,20 @@ export default function Home() {
 						disabled={isLoading}
 						className="flex items-center gap-2 px-6 py-2.5 bg-[var(--accent-green)] text-[#0A0A0A] font-primary text-[13px] font-medium rounded hover:opacity-90 transition-opacity disabled:opacity-50"
 					>
-						{isLoading ? "$ processing..." : "$ roast_my_code"}
+						{isLoading ? "$ processing..." : t("roastMyCode")}
 					</button>
 				</div>
 
 				{/* Footer Hint */}
 				<div className="flex items-center gap-6 mt-4">
 					<span className="text-[var(--text-tertiary)] font-secondary text-xs">
-						2,847 codes roasted
+						{t("codesRoasted")}
 					</span>
 					<span className="text-[var(--text-tertiary)] font-primary text-xs">
 						·
 					</span>
 					<span className="text-[var(--text-tertiary)] font-secondary text-xs">
-						avg score: 4.2/10
+						{t("avgScore")}: 4.2/10
 					</span>
 				</div>
 
@@ -190,18 +192,18 @@ export default function Home() {
 								{"//"}
 							</span>
 							<span className="text-[var(--text-primary)] font-primary text-sm font-bold">
-								shame_leaderboard
+								{t("shameLeaderboard")}
 							</span>
 						</div>
 						<Link
 							href="/leaderboard"
 							className="flex items-center gap-1 px-3 py-1.5 border border-[var(--border-primary)] rounded text-[var(--text-secondary)] font-primary text-xs hover:bg-[var(--bg-surface)] transition-colors"
 						>
-							$ view_all &gt;&gt;
+							{t("viewAll")}
 						</Link>
 					</div>
 					<p className="text-[var(--text-tertiary)] font-secondary text-[13px]">
-						{"// the worst code on the internet, ranked by shame"}
+						{t("worstCode")}
 					</p>
 
 					{/* Table */}

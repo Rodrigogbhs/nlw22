@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo } from "react";
+import { useLanguage } from "../lib/LanguageContext";
+import { LanguageSelector } from "../components/LanguageSelector";
 
 interface Issue {
 	id: string;
@@ -13,6 +15,7 @@ interface Issue {
 
 function ResultsContent() {
 	const searchParams = useSearchParams();
+	const { t } = useLanguage();
 
 	const score = useMemo(() => {
 		const s = searchParams.get("score");
@@ -97,14 +100,14 @@ function ResultsContent() {
 
 	const verdict =
 		score < 2
-			? "verdict: catastrophic_failure"
+			? t("catastrophicFailure")
 			: score < 4
-				? "verdict: needs_serious_help"
+				? t("needsSeriousHelp")
 				: score < 6
-					? "verdict: needs_work"
+					? t("needsWork")
 					: score < 8
-						? "verdict: decent_work"
-						: "verdict: solid_code";
+						? t("decentWork")
+						: t("solidCode");
 
 	return (
 		<div className="flex flex-col min-h-screen w-full bg-[var(--bg-page)]">
@@ -126,8 +129,9 @@ function ResultsContent() {
 						href="/leaderboard"
 						className="text-[var(--text-secondary)] font-secondary text-[13px] hover:text-[var(--text-primary)] transition-colors"
 					>
-						leaderboard
+						{t("leaderboard")}
 					</Link>
+					<LanguageSelector />
 				</div>
 			</nav>
 
@@ -213,7 +217,7 @@ function ResultsContent() {
 							{"//"}
 						</span>
 						<span className="text-[var(--text-primary)] font-primary text-sm font-bold">
-							your_submission
+							{t("yourSubmission")}
 						</span>
 					</div>
 					<div className="flex border border-[var(--border-primary)] rounded-lg overflow-hidden bg-[var(--bg-input)] h-[424px]">
@@ -245,7 +249,7 @@ function ResultsContent() {
 							{"//"}
 						</span>
 						<span className="text-[var(--text-primary)] font-primary text-sm font-bold">
-							detailed_analysis
+							{t("detailedAnalysis")}
 						</span>
 					</div>
 					{/* Issues Grid */}
@@ -295,7 +299,7 @@ function ResultsContent() {
 							{"//"}
 						</span>
 						<span className="text-[var(--text-primary)] font-primary text-sm font-bold">
-							suggested_fix
+							{t("suggestedFix")}
 						</span>
 					</div>
 					{/* Diff Block */}
